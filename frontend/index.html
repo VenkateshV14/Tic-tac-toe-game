@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div class="header centered-header">
+    <h1>Tic Tac Toe</h1>
+    <div id="langContainer" class="lang-select">
+        <label for="languageSelect">🌐</label>
+        <select id="languageSelect">
+          <option value="en">Eng</option>
+          <option value="te">Tel</option>
+          <option value="hi">Hin</option>
+        </select>
+      </div>      
+  </div>
+
+  <!-- Update the start screen section to this: -->
+  <div id="startScreen">
+    <h2 id="startGameLabel">Please select mode and enter names</h2>
+    <div id="modeSelection">
+      <label>
+        <input type="radio" name="mode" value="single" checked>
+        <span id="labelSingle">Single Player</span>
+      </label>
+      <label>
+        <input type="radio" name="mode" value="two">
+        <span id="labelTwo">Two Player</span>
+      </label>
+    </div>
+
+    <div id="playerInputs">
+      <div id="player1Container">
+        <input type="text" id="player1Name" placeholder="Player 1 Name" required>
+      </div>
+      <div id="player2Container">
+        <input type="text" id="player2Name" placeholder="Player 2 Name">
+      </div>
+    </div>
+
+    <button id="startGameBtn">Start Game</button>
+  </div>
+
+  <div id="gameContainer" class="hidden">
+    <button id="backBtn" class="back-btn">⬅️ Back</button>
+    <div class="game-header">
+      <div id="gameStatus"></div>
+      <div class="game-controls">
+        <div id="seriesSelection">
+          <label for="seriesMode">Game Mode:</label>
+          <select id="roundMode">
+            <option value="1">Normal</option>
+            <option value="3">Best of 3</option>
+            <option value="5">Best of 5</option>
+            <option value="7">Best of 7</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="board-wrapper">
+      <div class="board" id="board"></div>
+      <div id="winLine"></div>
+    </div>
+    <div id="confetti"></div>  
+      
+    <div class="action-buttons">
+      <button id="swapBtn" class="swap-btn">🔄 Swap</button>
+      <button id="restartBtn">Restart</button>
+      <button id="historyBtn">View History</button>
+    </div>
+    <button id="playAgainBtn" class="hidden">Play Again</button>  
+
+    <div id="historyPopup" class="popup hidden">
+      <div class="popup-content">
+        <h3>Last 10 Winners</h3>
+        <ul id="historyList"></ul>
+        <button id="clearHistoryBtn">🗑️ Clear History</button>
+        <button id="closeHistoryBtn">Close</button>
+      </div>
+    </div>
+    
+    <div id="popup" class="popup hidden">
+      <div class="popup-content">
+        <p id="popupMessage"></p>
+        <button id="popupRestartBtn">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

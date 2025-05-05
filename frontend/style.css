@@ -1,0 +1,479 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+body:not(.game-started) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#backBtn {
+  position: fixed; 
+  left: 20px;
+  top: 20px;
+  margin: 0;
+  z-index: 1000;
+}
+
+#gameContainer {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 60px; /* Make space for the fixed back button */
+}
+
+.swap-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.header {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0 20px;
+  margin-bottom: -30px;
+  position: relative; /* Add this */
+}
+
+.lang-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 1em;
+  margin-top: 20px;
+  margin-left: 0; /* Changed from 10px to remove extra space */
+  margin-right: 10px; /* Added to balance spacing */
+}
+
+#languageSelect {
+  padding: 6px 12px;
+  font-size: 1em;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  background-color: #fff;
+  appearance: none;
+  cursor: pointer;
+}
+
+#startScreen {
+  max-width: 400px;
+  margin: 30px auto; /* Reduced from 100px */
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+  text-align: center;
+  border-top: 4px solid #4CAF50;
+}
+
+#startGameLabel {
+  font-size: 1.2em;
+  color: #444;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+#modeSelection {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center; /* Added to center radio buttons */
+}
+
+#modeSelection label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1em;
+  color: #333;
+  width: 180px; /* Fixed width for alignment */
+}
+
+#modeSelection input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0; /* Prevent radio button from moving */
+}
+
+#modeSelection input[type="radio"]:checked::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#playerInputs {
+  margin: 25px 0;
+}
+
+#playerInputs::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #eee;
+  margin: 20px 0;
+}
+
+#playerInputs input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+#playerInputs input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+#player2Container {
+  margin-top: 15px;
+}
+
+#startGameBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+#startGameBtn:hover {
+  background-color: #3d8b40;
+}
+
+/* Rest of your existing CSS remains the same below this point */
+#playAgainBtn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 25px;
+  font-size: 1em;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#playAgainBtn.hidden {
+  display: none;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  color: #333;
+  margin-right: auto; /* Added to push language selector closer */
+  padding-left: 75px; /* Added to move heading right */
+}
+
+
+.board-wrapper {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+button,
+#restartBtn,
+#popupRestartBtn,
+#playAgainBtn,
+#historyBtn,
+.swap-btn,
+.back-btn {
+  background-color: #ff5959;
+  color: white;
+  margin: 0; 
+}
+
+.swap-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.swap-btn:hover {
+  background-color: #0b7dda;
+}
+
+/* Add these styles to your style.css file */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.popup.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.popup:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-content h3 {
+  margin-top: 0;
+  color: #333;
+  text-align: center;
+}
+
+.popup-content button {
+  margin: 10px 5px 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+#clearHistoryBtn {
+  background-color: #f44336;
+  color: white;
+}
+
+.popup-content button:not(#clearHistoryBtn) {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.popup-content button:hover {
+  opacity: 0.9;
+}
+
+.board {
+  display: grid;
+  width: fit-content;
+  margin: 20px auto;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 8px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cell {
+  background-color: #ffffff;
+  border: 2px solid #4CAF50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  border-radius: 8px;
+  user-select: none;
+  color: inherit;
+}
+
+.cell:hover {
+  background-color: #e6ffe6;
+  transform: scale(1.05);
+}
+
+.cell.x {
+  color: #2196F3;
+}
+
+.cell.o {
+  color: #f44336;
+}
+
+.cell.clicked {
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#gameStatus {
+  font-size: 1.2em;
+  margin: 20px auto;
+  color: #444;
+  max-width: 100%;
+  text-align: center;
+  word-wrap: break-word;
+  white-space: normal;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+#restartBtn,
+#popupRestartBtn,
+#playAgainBtn {
+  background-color: #008CBA;
+  color: white;
+  margin: 8px;
+}
+
+#restartBtn:hover,
+#popupRestartBtn:hover,
+#playAgainBtn:hover {
+  background-color: #0077a8;
+  box-shadow: 0 0 8px rgba(0, 140, 186, 0.5);
+}
+
+.back-btn:hover {
+  background-color: #ff1f1f;
+}
+
+#seriesSelection {
+  margin: 10px 0;
+  text-align: center;
+}
+
+#seriesSelection label {
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 1.1em;
+}
+
+#historyBtn {
+  background-color: #673ab7;
+  color: white;
+  margin: 10px;
+}
+
+#historyList {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+  margin-top: 10px;
+}
+
+#historyList li {
+  margin-bottom: 6px;
+  font-size: 1em;
+}
+
+#winLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.win-line {
+  position: absolute;
+  background-color: #4CAF50;
+  height: 6px;
+  border-radius: 4px;
+  transform-origin: 0 50%;
+  z-index: 10;
+}
+
+#confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .board {
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: repeat(3, 70px);
+  }
+
+  .cell {
+    font-size: 2em;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  #seriesSelection {
+    font-size: 0.9em;
+  }
+}
