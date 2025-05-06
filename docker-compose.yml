@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  service1:
+    build: frontend/
+    container_name: frontend-cont
+    ports:
+      - "3500:3500"
+
+  service2:
+    build: backend/bot-service
+    container_name: bot-cont
+    ports:
+      - "8000:8000"
+
+  service3:
+    build: backend/lang-service
+    container_name: lang-cont
+    ports:
+      - "8001:8001"
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ttt_user
+      POSTGRES_PASSWORD: ttt_password
+      POSTGRES_DB: tictactoe
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  service4:
+    build: database/
+    container_name: db-cont
+    ports:
+      - "8002:8002"
+    depends_on:
+      - postgres
