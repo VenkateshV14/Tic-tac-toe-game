@@ -20,11 +20,19 @@ body:not(.game-started) {
 }
 
 #backBtn {
-  position: fixed; 
+  position: fixed;
   left: 20px;
   top: 20px;
   margin: 0;
   z-index: 1000;
+  background-color: #ff4444;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 1em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 #gameContainer {
@@ -32,7 +40,7 @@ body:not(.game-started) {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  padding-top: 60px; /* Make space for the fixed back button */
+  padding-top: 60px;
 }
 
 .swap-btn:disabled {
@@ -49,7 +57,7 @@ body:not(.game-started) {
   margin-top: 20px;
   padding: 0 20px;
   margin-bottom: -30px;
-  position: relative; /* Add this */
+  position: relative;
 }
 
 .lang-select {
@@ -62,8 +70,8 @@ body:not(.game-started) {
   background: #ffffff;
   font-size: 1em;
   margin-top: 20px;
-  margin-left: 0; /* Changed from 10px to remove extra space */
-  margin-right: 10px; /* Added to balance spacing */
+  margin-left: 0;
+  margin-right: 10px;
 }
 
 #languageSelect {
@@ -78,7 +86,7 @@ body:not(.game-started) {
 
 #startScreen {
   max-width: 400px;
-  margin: 30px auto; /* Reduced from 100px */
+  margin: 30px auto;
   padding: 30px;
   background: white;
   border-radius: 12px;
@@ -99,7 +107,7 @@ body:not(.game-started) {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: center; /* Added to center radio buttons */
+  align-items: center;
 }
 
 #modeSelection label {
@@ -108,7 +116,7 @@ body:not(.game-started) {
   gap: 10px;
   font-size: 1.1em;
   color: #333;
-  width: 180px; /* Fixed width for alignment */
+  width: 180px;
 }
 
 #modeSelection input[type="radio"] {
@@ -120,7 +128,7 @@ body:not(.game-started) {
   outline: none;
   cursor: pointer;
   position: relative;
-  flex-shrink: 0; /* Prevent radio button from moving */
+  flex-shrink: 0;
 }
 
 #modeSelection input[type="radio"]:checked::before {
@@ -185,7 +193,6 @@ body:not(.game-started) {
   background-color: #3d8b40;
 }
 
-/* Rest of your existing CSS remains the same below this point */
 #playAgainBtn {
   display: block;
   margin: 20px auto;
@@ -206,10 +213,9 @@ h1 {
   font-size: 3em;
   margin-bottom: 10px;
   color: #333;
-  margin-right: auto; /* Added to push language selector closer */
-  padding-left: 75px; /* Added to move heading right */
+  margin-right: auto;
+  padding-left: 75px;
 }
-
 
 .board-wrapper {
   position: relative;
@@ -226,7 +232,16 @@ button,
 .back-btn {
   background-color: #ff5959;
   color: white;
-  margin: 0; 
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button:active,
+.cell:active {
+  transform: scale(0.95);
 }
 
 .swap-btn {
@@ -238,7 +253,6 @@ button,
   background-color: #0b7dda;
 }
 
-/* Add these styles to your style.css file */
 .popup {
   position: fixed;
   top: 0;
@@ -343,6 +357,7 @@ button,
   border-radius: 8px;
   user-select: none;
   color: inherit;
+  cursor: pointer;
 }
 
 .cell:hover {
@@ -459,6 +474,7 @@ button,
   display: none;
 }
 
+/* Mobile-specific styles */
 @media (max-width: 600px) {
   .board {
     grid-template-columns: repeat(3, 70px);
@@ -475,5 +491,125 @@ button,
 
   #seriesSelection {
     font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2em;
+    padding-left: 0;
+    margin-bottom: 5px;
+  }
+
+  .header {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .lang-select {
+    margin-top: 10px;
+    margin-right: 0;
+  }
+
+  #startScreen {
+    padding: 20px;
+    margin: 20px auto;
+    width: 95%;
+  }
+
+  #startGameLabel {
+    font-size: 1em;
+    margin-bottom: 15px;
+  }
+
+  #modeSelection label {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  #playerInputs input {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .board {
+    grid-template-columns: repeat(3, min(25vw, 80px));
+    grid-template-rows: repeat(3, min(25vw, 80px));
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .cell {
+    font-size: 1.8em;
+    border-width: 1px;
+  }
+
+  #gameStatus {
+    font-size: 1em;
+    margin: 10px auto;
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .action-buttons button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    margin: 5px;
+    flex: 1 1 40%;
+  }
+
+  #playAgainBtn {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .popup-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  #backBtn {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 5px 10px;
+    font-size: 0.8em;
+  }
+
+  #seriesSelection {
+    font-size: 0.9em;
+  }
+
+  #seriesSelection select {
+    font-size: 0.9em;
+  }
+
+  #historyList li {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 350px) {
+  .board {
+    grid-template-columns: repeat(3, 22vw);
+    grid-template-rows: repeat(3, 22vw);
+  }
+
+  .cell {
+    font-size: 1.5em;
+  }
+
+  .action-buttons button {
+    flex: 1 1 100%;
   }
 }
