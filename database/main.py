@@ -7,7 +7,7 @@ import os
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3500", "http://192.168.29.105:3500"],
+    allow_origins=["http://localhost:3500", "http://54.87.71.8:3500/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
