@@ -13,14 +13,15 @@ pipeline {
         stage('Update Kubernetes Manifests') {
             steps {
                 script {
-                    sh '''
-                      echo "Templating Kubernetes manifests with image tag..."
-                      export IMAGE_TAG=${IMAGE_TAG}
-                      envsubst < kubernetes/bot-service.yml | kubectl apply -f - -n tic-tac-toe
-                    '''
+                    sh """
+                        echo "Templating Kubernetes manifests with image tag: ${params.IMAGE_TAG}"
+                        export IMAGE_TAG=${params.IMAGE_TAG}
+                        envsubst < kubernetes/bot-service.yml | kubectl apply -f - -n tic-tac-toe
+                    """
                 }
             }
         }
+
 
         stage('Deploy to EKS') {
             steps {
