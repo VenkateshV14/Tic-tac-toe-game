@@ -23,20 +23,20 @@ jobs:
     - name: Build and push bot-service
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/bot-img:latest ./backend/bot-service/
-        docker push ${{ secrets.DOCKER_USERNAME }}/bot-service:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/bot-img:latest
 
     - name: Build and push language-service
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/lang-img:latest ./backend/lang-service
-        docker push ${{ secrets.DOCKER_USERNAME }}/language-service:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/lang-img:latest
 
     - name: Build and push winner-service
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/database-img:latest ./database
-        docker push ${{ secrets.DOCKER_USERNAME }}/winner-service:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/database-img:latest
 
     - name: Build and push frontend
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-img:latest ./frontend
-        docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-img:latest
 
