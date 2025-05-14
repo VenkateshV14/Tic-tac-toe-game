@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: lang
-          image: petercephas52/lang-img:latest
+          image: petercephas52/lang-img:{IMAGE_TAG}
           imagePullPolicy: Always
           ports:
             - containerPort: 8001

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: petercephas52/frontend-img:latest
+          image: petercephas52/frontend-img:{IMAGE_TAG}
           imagePullPolicy: Always
           ports:
             - containerPort: 3500

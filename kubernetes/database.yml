@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: db
-          image: petercephas52/database-img:latest
+          image: petercephas52/database-img:${IMAGE_TAG}
           imagePullPolicy: Always
           ports:
             - containerPort: 8002
