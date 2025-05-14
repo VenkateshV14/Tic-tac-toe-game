@@ -40,3 +40,22 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-img:latest ./frontend
         docker push ${{ secrets.DOCKER_USERNAME }}/frontend-img:latest
 
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Download SonarScanner
+      run: |
+        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+        mv sonar-scanner-5.0.1.3006-linux sonar-scanner
+
+    - name: Run SonarQube scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        ./sonar-scanner/bin/sonar-scanner
+
+

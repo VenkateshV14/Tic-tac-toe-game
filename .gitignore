@@ -2,3 +2,10 @@
 .database/main.cpython-313.pyc
 **myenv
 .DS_Store
+
+# terraform files
+
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
