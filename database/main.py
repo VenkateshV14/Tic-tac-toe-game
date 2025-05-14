@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DB_URL = "postgresql://ttt_user:ttt_password@postgres:5432/tictactoe"
+DB_URL = "postgresql://ttt_user:ttt_password@db:5432/tictactoe"
 
 class GameResult(BaseModel):
     player1_name: str

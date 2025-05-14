@@ -25,6 +25,7 @@ metadata:
   name: bot-service
   namespace: tic-tac-toe
 spec:
+  type: LoadBalancer
   selector:
     app: bot-service
   ports:
