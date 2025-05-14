@@ -58,4 +58,14 @@ jobs:
       run: |
         ./sonar-scanner/bin/sonar-scanner
 
+    - name: Trigger Jenkins CD
+      env:
+        JENKINS_USER: ${{ secrets.JENKINS_USER }}
+        JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        JENKINS_URL: ${{ secrets.JENKINS_URL }}
+        JENKINS_JOB: ${{ secrets.JENKINS_JOB }}
+      run: |
+        curl -X POST "http://${JENKINS_USER}:${JENKINS_TOKEN}@${JENKINS_URL}/job/${JENKINS_JOB}/build"
+
+
 
