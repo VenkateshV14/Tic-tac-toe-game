@@ -28,6 +28,7 @@ spec:
       containers:
         - name: db
           image: petercephas52/database-img:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8002
 ---

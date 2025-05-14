@@ -16,6 +16,7 @@ spec:
       containers:
         - name: bot
           image: petercephas52/bot-img:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
 ---
