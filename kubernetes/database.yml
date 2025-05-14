@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+  namespace: tic-tac-toe
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: tic-tac-toe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: petercephas52/database-img:latest
+          ports:
+            - containerPort: 8002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: tic-tac-toe
+spec:
+  selector:
+    app: db
+  ports:
+    - port: 8002
+      targetPort: 8002

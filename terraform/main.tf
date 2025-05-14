@@ -56,3 +56,44 @@ resource "aws_instance" "Tic-Tac-Toe" {
     Name = "Tic-Tac_Toe_game"
   }
 }
+
+resource "aws_eks_cluster" "tic_tac_toe_eks" {
+  name     = "tic-tac-toe-cluster"
+  role_arn = aws_iam_role.eks_cluster_role.arn
+
+  vpc_config {
+    subnet_ids = [
+      aws_subnet.public_1.id,
+      aws_subnet.public_2.id
+    ]
+    endpoint_public_access = true
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.eks_cluster_attach
+  ]
+}
+
+resource "aws_eks_node_group" "node_group" {
+  cluster_name    = aws_eks_cluster.tic_tac_toe_eks.name
+  node_group_name = "tic-tac-toe-node-group"
+  node_role_arn   = aws_iam_role.eks_node_role.arn
+  subnet_ids      = [
+    aws_subnet.public_1.id,
+    aws_subnet.public_2.id
+  ]
+
+  scaling_config {
+    desired_size = 1
+    max_size     = 1
+    min_size     = 1
+  }
+
+  instance_types = ["t3.medium"]
+
+  depends_on = [
+    aws_iam_role_policy_attachment.node-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.node-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.node-AmazonEKS_CNI_Policy
+  ]
+}

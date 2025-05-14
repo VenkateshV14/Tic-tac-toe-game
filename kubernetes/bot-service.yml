@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-service
+  namespace: tic-tac-toe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bot-service
+  template:
+    metadata:
+      labels:
+        app: bot-service
+    spec:
+      containers:
+        - name: bot
+          image: petercephas52/bot-img:latest
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-service
+  namespace: tic-tac-toe
+spec:
+  selector:
+    app: bot-service
+  ports:
+    - port: 8000
+      targetPort: 8000

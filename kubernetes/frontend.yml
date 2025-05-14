@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-service
+  namespace: tic-tac-toe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-service
+  template:
+    metadata:
+      labels: 
+        app: frontend-service
+    spec:
+      containers:
+        - name: frontend
+          image: petercephas52/frontend-img:latest
+          ports:
+            - containerPort: 3500
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: tic-tac-toe
+spec:
+  type: LoadBalancer
+  selector: 
+    app: frontend-service
+  ports:
+    - port: 80
+      targetPort: 3500

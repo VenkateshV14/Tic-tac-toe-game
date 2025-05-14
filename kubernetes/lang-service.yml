@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lang-service
+  namespace: tic-tac-toe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lang-service
+  template:
+    metadata:
+      labels:
+        app: lang-service
+    spec:
+      containers:
+        - name: lang
+          image: petercephas52/lang-img:latest
+          ports:
+            - containerPort: 8001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lang-service
+  namespace: tic-tac-toe
+spec:
+  selector:
+    app: lang-service
+  ports:
+    - port: 8001
+      targetPort: 8001
