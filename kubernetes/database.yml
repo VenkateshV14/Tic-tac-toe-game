@@ -38,7 +38,7 @@ metadata:
   name: db
   namespace: tic-tac-toe
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: db
   ports:
