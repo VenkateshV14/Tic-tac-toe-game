@@ -25,23 +25,23 @@ jobs:
 
     - name: Build and push bot-service
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/bot-img:${IMAGE_TAG} ./backend/bot-service/
-        docker push ${{ secrets.DOCKER_USERNAME }}/bot-img:${IMAGE_TAG}
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/bot-img:latest ./backend/bot-service/
+        docker push ${{ secrets.DOCKER_USERNAME }}/bot-img:latest
 
     - name: Build and push language-service
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/lang-img:${IMAGE_TAG} ./backend/lang-service
-        docker push ${{ secrets.DOCKER_USERNAME }}/lang-img:${IMAGE_TAG}
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/lang-img:latest ./backend/lang-service
+        docker push ${{ secrets.DOCKER_USERNAME }}/lang-img:latest
 
     - name: Build and push winner-service
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/database-img:${IMAGE_TAG} ./database
-        docker push ${{ secrets.DOCKER_USERNAME }}/database-img:${IMAGE_TAG}
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/database-img:latest ./database
+        docker push ${{ secrets.DOCKER_USERNAME }}/database-img:latest
 
     - name: Build and push frontend
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-img:${IMAGE_TAG} ./frontend
-        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-img:${IMAGE_TAG}
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-img:latest ./frontend
+        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-img:latest
 
     - name: Set up Java
       uses: actions/setup-java@v3
@@ -49,24 +49,4 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Download SonarScanner
-      run: |
-        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-        mv sonar-scanner-5.0.1.3006-linux sonar-scanner
-
-    - name: Run SonarQube scan
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        ./sonar-scanner/bin/sonar-scanner
-
-    - name: Trigger Jenkins CD
-      env:
-        JENKINS_USER: ${{ secrets.JENKINS_USER }}
-        JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
-        JENKINS_URL: ${{ secrets.JENKINS_URL }}
-        JENKINS_JOB: ${{ secrets.JENKINS_JOB }}
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        curl -X POST "http://${JENKINS_USER}:${JENKINS_TOKEN}@${JENKINS_URL}/job/${JENKINS_JOB}/buildWithParameters?IMAGE_TAG=${IMAGE_TAG}"
+    

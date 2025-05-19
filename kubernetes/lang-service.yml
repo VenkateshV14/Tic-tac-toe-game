@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: lang
-          image: petercephas52/lang-img:{IMAGE_TAG}
+          image: petercephas52/lang-img:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8001
@@ -26,7 +26,7 @@ metadata:
   name: lang-service
   namespace: tic-tac-toe
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: lang-service
   ports:

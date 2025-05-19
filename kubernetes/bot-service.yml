@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: bot
-          image: petercephas52/bot-img:${IMAGE_TAG}
+          image: petercephas52/bot-img:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
@@ -26,7 +26,7 @@ metadata:
   name: bot-service
   namespace: tic-tac-toe
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: bot-service
   ports:

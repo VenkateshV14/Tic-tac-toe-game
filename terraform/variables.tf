@@ -1,15 +1,14 @@
-variable "aws_region" {
-  default = "us-east-1"
+variable "cluster_name" {
+  default = "tic-tac-toe-cluster"
 }
 
-variable "instance_type" {
-  default = "t3.medium"
+variable "vpc_id" {
+  default = "vpc-0849aa80a2ea058ec"
 }
 
-variable "ami_id" {
-  default = "ami-084568db4383264d4"
+variable "subnet_ids" {
+  default = ["subnet-053030848d941503c", "subnet-04f2004d3e8b9000c"]
 }
 
-variable "key_name" {
-  default = "chat-bot-key"
-}
+
+
