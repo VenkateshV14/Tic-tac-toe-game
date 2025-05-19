@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import asyncpg
+import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
@@ -13,7 +14,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DB_URL = "postgresql://ttt_user:ttt_password@db:5432/tictactoe"
+DB_HOST = os.getenv("DB_HOST", "postgres-service")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "tic_tac_toe")
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "mysecret123")
+
+DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 class GameResult(BaseModel):
     player1_name: str
@@ -23,6 +30,28 @@ class GameResult(BaseModel):
     rounds_played: int
     score_x: int
     score_o: int
+
+@app.on_event("startup")
+async def startup_event():
+    try:
+        conn = await asyncpg.connect(DB_URL)
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS game_results (
+                id SERIAL PRIMARY KEY,
+                player1_name VARCHAR(50) NOT NULL,
+                player2_name VARCHAR(50) NOT NULL,
+                winner VARCHAR(50),
+                series_mode INTEGER DEFAULT 1,
+                rounds_played INTEGER DEFAULT 1,
+                score_x INTEGER DEFAULT 0,
+                score_o INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await conn.close()
+        print("✅ Table ensured on startup.")
+    except Exception as e:
+        print("❌ Failed to create table:", e)
 
 @app.post("/save-result")
 async def save_result(data: GameResult):
